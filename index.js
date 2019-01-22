@@ -4,6 +4,8 @@ const app = express();
 const multer = require('multer');
 const uidSafe = require('uid-safe');
 const path = require('path');
+const s3 = require('./s3');
+const config = require('./config');
 
 //takes the uploaded file
 //gives it a unique name of 24 characters (uidSafe)+ the original file extension (path)
@@ -27,7 +29,7 @@ var uploader = multer({
     }
 });
 
-///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 app.use(express.static('./public'));
 
@@ -37,14 +39,17 @@ app.get('/images', (req, res) => {
     });
 });
 
-app.post('/upload', uploader.single('uploadedFile'), (req, res) => {
-    console.log('post request to /upload'); //this is not showing yet
-    console.log("req.body: ", req.body);
-    console.log("req.file: ", req.file);
-
-    //next steps: save filename, title, description, name in the images table
-    //make new image render automatically on screen (without reloading the page)
-
+app.post('/upload', uploader.single('uploadedFile'), s3.upload, (req, res) => {
+    console.log('First middleware function: the image has been uploaded to the /uploads folder. Second middleware function: image has been uploaded to the imageboardspiced bucket on AWS s3 and removed from /uploads folder.');
+    //save url, username, title and description in the images table
+    db.addImage(
+        config.s3Url + req.file.filename,
+        req.body.name,
+        req.body.title,
+        req.body.description
+    ).then(({rows}) => {
+        res.json(rows[0]);
+    });
 });
 
 app.listen(8080, () => console.log('Listening!'));

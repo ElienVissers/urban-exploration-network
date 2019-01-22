@@ -13,16 +13,17 @@
         mounted: function() {
             var self = this;
             axios.get('/images').then(function(response) {
-                console.log("response from /images to axios: ", response);
+                // console.log("response from /images to axios: ", response);
                 self.images = response.data;
             });
         },
         methods: {
             uploadFile: function(e) {
+                var self = this;
                 e.preventDefault();
                 var file = document.getElementById('file');
                 var uploadedFile = file.files[0];
-                // use the formData API to send files to server --> pass it a key value pair with the key as a description and the value the file you wanna send
+                // use the formData API to send files to server --> pass it a key value pair with the key as a description and the value the file you want to send
                 // console.log("this: ", this); /*this refers to the Vue instance*/
                 var formData = new FormData();
                 formData.append('uploadedFile', uploadedFile);
@@ -30,8 +31,10 @@
                 formData.append('description', this.form.description);
                 formData.append('name', this.form.name);
 
-                axios.post('/upload', formData).then(function() {
-
+                axios.post('/upload', formData).then(function(response) {
+                    console.log("response: ", response);
+                    console.log("self: ", self);
+                    self.images.unshift(response.data);
                 });
             }
         }
