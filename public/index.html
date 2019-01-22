@@ -2,11 +2,21 @@
 <html>
 <head>
     <title>My imageboard!</title>
-    <link href="/style.css">
+    <link href="/style.css" rel="stylesheet">
 </head>
 <body>
 
+    <h1>Urban Exploring Foto's</h1>
+
     <div id="main">
+
+        <form>
+            <input type="text" name="title" placeholder="title">
+            <input type="text" name="name" placeholder="name">
+            <input type="text" name="description" placeholder="description">
+            <input id="file" type="file"  accept="image/*">
+            <button>UPLOAD</button>
+        </form>
 
         <div id="img-container" v-if="images.length > 0">
 
@@ -14,10 +24,9 @@
                 <img v-bind:src="imageInfo.url">
                 <p>{{imageInfo.title}}</p>
             </div>
-
         </div>
 
-    </div>
+    </div> <!--closes #main-->
 
 
 

@@ -1,0 +1,29 @@
+h1 {
+    text-align: center;
+}
+
+#img-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /*use flex grow etc to give the larger imgs more space*/
+}
+
+.img-card {
+    border: 1px solid black;
+    height: 340px;
+    position: relative;
+    overflow: hidden;
+    margin: 20px;
+    flex-grow: 1;
+}
+
+.img-card:hover {
+    box-shadow: 5px 10px;
+}
+
+.img-card img {
+    display: block;
+    height: 300px;
+    margin: 10px auto;
+}
