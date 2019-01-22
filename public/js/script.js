@@ -14,7 +14,7 @@
             var self = this;
             axios.get('/images').then(function(response) {
                 // console.log("response from /images to axios: ", response);
-                self.images = response.data;
+                self.images = response.data.reverse();
             });
         },
         methods: {
