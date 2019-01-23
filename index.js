@@ -6,6 +6,10 @@ const uidSafe = require('uid-safe');
 const path = require('path');
 const s3 = require('./s3');
 const config = require('./config');
+const bodyParser = require('body-parser');
+
+app.use(require('body-parser').urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 //takes the uploaded file
 //gives it a unique name of 24 characters (uidSafe)+ the original file extension (path)
@@ -49,6 +53,26 @@ app.post('/upload', uploader.single('uploadedFile'), s3.upload, (req, res) => {
         req.body.description
     ).then(({rows}) => {
         res.json(rows[0]);
+    });
+});
+
+app.get('/image/:id/data', (req, res) => {
+    db.getImageData(req.params.id).then((dbInfo) => {
+        res.json(dbInfo.rows);
+    });
+});
+
+app.get('/image/:id/comments', (req, res) => {
+    if (req.params.id) {
+        db.getImageComments(req.params.id).then((dbInfo) => {
+            res.json(dbInfo.rows);
+        });
+    }
+});
+
+app.post('/comment/:id/add', (req, res) => {
+    db.addComment(req.body.name, req.body.text, req.params.id).then((dbInfo) => {
+        res.json(dbInfo.rows);
     });
 });
 

@@ -20,14 +20,41 @@
 
         <div id="img-container" v-if="images.length > 0">
 
-            <div v-for="imageInfo in images" class="img-card">
+            <div v-for="imageInfo in images" @click="showModal(imageInfo.id)" class="img-card">
                 <img v-bind:src="imageInfo.url">
                 <p>{{imageInfo.title}}</p>
             </div>
         </div>
 
+        <img-modal v-if="currentImage" :id="currentImage" @close="hideModal"></img-modal>
+
     </div> <!--closes #main-->
 
+    <!--template img-modal-->
+    <script id="img-modal-template" type="text/x-template">
+        <div id="img-modal"  @click="sendCloseEvent">
+            <div class="modal-content">
+                <div class="img-section">
+                    <img :src="url">
+                    <h2>{{title}}</h2>
+                    <p>{{description}}</p>
+                    <h6>uploaded by {{username}} on {{uploadTime}}</h6>
+                </div>
+                <div class="comments-section">
+                    <h4>Add a comment:</h4>
+                    <input placeholder="name" name="name" v-model="comment.name">
+                    <input placeholder="comment" name="text" v-model="comment.text">
+                    <button @click="addComment">COMMENT</button>
+                    <div id="comment-container">
+                        <div class="comment-card" v-for="commentInfo in comments">
+                            <p>{{commentInfo.comment}}</p>
+                            <h6>{{commentInfo.username}} on {{commentInfo.created_at}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
 
 
     <script src="/js/vue.js"></script>

@@ -20,10 +20,73 @@ h1 {
 
 .img-card:hover {
     box-shadow: 5px 10px;
+    transform: scale(1.05);
 }
 
 .img-card img {
     display: block;
     height: 300px;
     margin: 10px auto;
+}
+
+#img-modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    width: 70%;
+    height: 90%;
+    margin: auto;
+    box-shadow: 25px 25px;
+}
+
+.modal-content h6 {
+    margin: 3px 0;
+}
+
+.img-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img-section img {
+    margin-top: 5%;
+    height: 400px;
+    width: auto;
+}
+
+.img-section p {
+    text-align: justify;
+}
+
+.comments-section {
+    margin-left: 20px;
+}
+
+.comments-section button {
+    margin-bottom: 20px;
+}
+
+#comment-container {
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.comment-card {
+    background-color: lightgrey;
+    width: 80%;
+    margin-top: 5px;
 }
