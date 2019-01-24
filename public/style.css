@@ -1,32 +1,130 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: arial;
+    font-variant: small-caps;
+    font-weight: lighter;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    background-color: black;
+    color: white;
+    display: inline;
+    padding: 4px 6px;
+}
+
+.line {
+    border: 2px solid black;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.subtext {
+    display: inline;
+    margin-bottom: 80px;
+    width: 80%;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subtext h4 {
+    margin: 0;
+}
+
+#main {
+    background-color: black;
+    color: white;
+    width: 80%;
+}
+
+form {
+    margin: 60px 0 60px 60px;
+}
+
+form h4 {
+    background-color: white;
+    color: black;
+    display: inline;
+    padding: 5px;
+}
+
+form input {
+    border-color: black;
+    margin-top: 20px;
+}
+
+form input[type="file"] {
+    display: none;
+}
+
+form .custom-file-upload {
+    border: 1px solid black;
+    display: inline;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    margin: 7px 7px 0 0;
+}
+
+form button {
+    margin      : 7px 0 0 0;
+    padding     : 0 3px;
+    border      : 1px solid black;
+    background  : white;
+    font-family : inherit;
+    font-weight : bold;
+    font-size   : 1em;
+    cursor      : pointer;
+}
+
+form button:active {
+    position: relative;
+    top: 2px;
 }
 
 #img-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    /*use flex grow etc to give the larger imgs more space*/
 }
 
 .img-card {
-    border: 1px solid black;
-    height: 340px;
+    border: 1px solid white;
+    height: 400px;
     position: relative;
     overflow: hidden;
     margin: 20px;
     flex-grow: 1;
+    text-align: center;
 }
 
 .img-card:hover {
-    box-shadow: 5px 10px;
     transform: scale(1.05);
+    background-color: white;
+    color: black;
 }
 
 .img-card img {
     display: block;
     height: 300px;
     margin: 10px auto;
+}
+
+.img-card p {
+    margin: 30px 0;
 }
 
 #img-modal {
@@ -42,11 +140,14 @@ h1 {
 }
 
 .modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
     width: 70%;
     height: 90%;
     margin: auto;
-    box-shadow: 25px 25px;
+    color: black;
 }
 
 .modal-content h6 {
@@ -60,9 +161,16 @@ h1 {
 }
 
 .img-section img {
-    margin-top: 5%;
+    position: fixed;
+    top: 70px;
+    padding: 10px 10px 130px 10px;
     height: 400px;
     width: auto;
+    border: 1px solid black;
+}
+
+.img-section h3 {
+    margin-top: 450px;
 }
 
 .img-section p {
@@ -70,11 +178,31 @@ h1 {
 }
 
 .comments-section {
+    margin-top: 50px;
     margin-left: 20px;
+    width: 65vw;
+}
+
+.comments-section h4 {
+    display: inline;
+    background-color: black;
+    color: white;
+    padding: 5px;
+}
+
+.comments-section input {
+    border: 1px solid black;
 }
 
 .comments-section button {
-    margin-bottom: 20px;
+    margin: 7px 0 20px 0;
+    padding: 0 3px;
+    border: 1px solid black;
+    background: white;
+    color: black;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
 }
 
 #comment-container {
@@ -86,7 +214,11 @@ h1 {
 }
 
 .comment-card {
-    background-color: lightgrey;
-    width: 80%;
+    border: 1px solid black;
+    width: 99%;
     margin-top: 5px;
+}
+
+.comment-card p {
+    margin-left: 5px;
 }
