@@ -43,8 +43,17 @@ app.get('/images', (req, res) => {
     });
 });
 
+app.get('/images/:id/more', (req, res) => {
+    Promise.all([
+        db.getMoreImages(req.params.id),
+        db.getLowestId()
+    ]).then(dbInfo => {
+        res.json(dbInfo);
+    });
+});
+
 app.post('/upload', uploader.single('uploadedFile'), s3.upload, (req, res) => {
-    console.log('First middleware function: the image has been uploaded to the /uploads folder. Second middleware function: image has been uploaded to the imageboardspiced bucket on AWS s3 and removed from /uploads folder.');
+    // console.log('First middleware function: the image has been uploaded to the /uploads folder. Second middleware function: image has been uploaded to the imageboardspiced bucket on AWS s3 and removed from /uploads folder.');
     //save url, username, title and description in the images table
     db.addImage(
         config.s3Url + req.file.filename,
@@ -59,6 +68,8 @@ app.post('/upload', uploader.single('uploadedFile'), s3.upload, (req, res) => {
 app.get('/image/:id/data', (req, res) => {
     db.getImageData(req.params.id).then((dbInfo) => {
         res.json(dbInfo.rows);
+    }).catch(() => {
+        res.sendStatus(500);
     });
 });
 
@@ -66,6 +77,8 @@ app.get('/image/:id/comments', (req, res) => {
     if (req.params.id) {
         db.getImageComments(req.params.id).then((dbInfo) => {
             res.json(dbInfo.rows);
+        }).catch(() => {
+            res.sendStatus(500);
         });
     }
 });
@@ -74,6 +87,10 @@ app.post('/comment/:id/add', (req, res) => {
     db.addComment(req.body.name, req.body.text, req.params.id).then((dbInfo) => {
         res.json(dbInfo.rows);
     });
+});
+
+app.get('*', (req, res) => {
+    res.redirect('/');
 });
 
 app.listen(8080, () => console.log('Listening!'));

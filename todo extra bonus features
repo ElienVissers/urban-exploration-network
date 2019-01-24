@@ -1,0 +1,31 @@
+1. add prev and next buttons to your modal
+    when you get an image, also get id from the prev and next image
+    if there is a prev id, then show the prev button
+    when the prev button is clicked,
+
+2. add a text field where users can put tags when uploading
+        when submitting, split on comma
+        show the tags in the modal
+        make them links --> show all images with this tag
+        GO TO DAVID if you wanna do this, he'll give a tip about the db
+
+3. every 5 seconds, do a request to see if there are images with a higher id than the highest one on your page ==> display message that there is new content and user should refresh
+
+4. let people upload an img from internet
+
+5. allow users to reply comments
+
+6. allow users to delete images
+
+
+
+subquery:
+
+SELECT *, (
+    SLECT id FROM images
+    ORDER BY id ASC
+    LIMIT 1) as lowest_id
+FROM images
+WHERE id < $1
+ORDER BY id DESC
+LIMIT 12;

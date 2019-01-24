@@ -48,14 +48,37 @@
                 self.uploadTime = results.data[0].created_at.slice(0, 10);
             });
             axios.get('/image/' + self.id + '/comments').then(function(results) {
-                console.log("results from comments: ", results);
                 if (results.data.length > 0) {
                     for (let i = 0; i < results.data.length; i++) {
                         self.comments.unshift(results.data[i]);
                     }
-
                 }
             });
+        },
+        watch: {
+            //the function id will run everytime the id (= a prop) changes (the watcher will listen for a prop or data change)
+            id: function() {
+                var self = this;
+                axios.get('/image/' + self.id + '/data').then(function(results) {
+                    self.url = results.data[0].url;
+                    self.title = results.data[0].title;
+                    self.description = results.data[0].description;
+                    self.username = results.data[0].username;
+                    self.uploadTime = results.data[0].created_at.slice(0, 10);
+                }).catch(function() {
+                    self.$emit('close');
+                });
+                axios.get('/image/' + self.id + '/comments').then(function(results) {
+                    self.comments = [];
+                    if (results.data.length > 0) {
+                        for (let i = 0; i < results.data.length; i++) {
+                            self.comments.unshift(results.data[i]);
+                        }
+                    }
+                }).catch(function() {
+                    self.$emit('close');
+                });
+            }
         }
     });
 
@@ -69,13 +92,18 @@
                 description: '',
                 file: null
             },
-            currentImage: null
+            currentImage: window.location.hash.slice(1),
+            lowest_id: null
         },
         mounted: function() {
             var self = this;
+            //modal pops up when user clicks on an image
+            window.addEventListener('hashchange', function() {
+                self.currentImage = window.location.hash.slice(1);
+            });
             axios.get('/images').then(function(response) {
                 // console.log("response from /images to axios: ", response);
-                self.images = response.data.reverse();
+                self.images = response.data;
             });
         },
         methods: {
@@ -98,12 +126,15 @@
                     self.images.unshift(response.data);
                 });
             },
-            showModal: function(image_id) {
-                console.log(image_id);
-                this.currentImage = image_id;
+            moreContent: function() {
+                var self = this;
+                axios.get('/images/' + this.images[this.images.length -1].id + '/more').then(function(response) {
+                    self.images = self.images.concat(response.data[0].rows);
+                    self.lowest_id = response.data[1].rows[0].lowest_id;
+                });
             },
             hideModal: function() {
-                this.currentImage = null;
+                window.location.hash = '';
             }
         }
     });

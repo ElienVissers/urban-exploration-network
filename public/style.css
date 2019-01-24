@@ -101,6 +101,11 @@ form button:active {
     justify-content: space-around;
 }
 
+a {
+    color: white;
+    text-decoration: none;
+}
+
 .img-card {
     border: 1px solid white;
     height: 400px;
@@ -115,6 +120,22 @@ form button:active {
     transform: scale(1.05);
     background-color: white;
     color: black;
+}
+
+#more-card:hover {
+    background-image: url('/more.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    box-sizing: border-box;
+    height: 400px;
+    width: 300px;
+    padding-top: 300px;
+    transform: scale(1.05);
+    background-color: white;
+    color: white;
+    text-align: center;
+    cursor: pointer;
 }
 
 .img-card img {

@@ -11,7 +11,29 @@ if (process.env.DATABASE_URL) {
 module.exports.getImages = function() {
     return db.query(
         `SELECT *
-        FROM images`
+        FROM images
+        ORDER BY id DESC
+        LIMIT 4`
+    );
+};
+
+module.exports.getLowestId = function() {
+    return db.query(
+        `SELECT id AS lowest_id
+        FROM images
+        ORDER BY id ASC
+        LIMIT 1`
+    );
+};
+
+module.exports.getMoreImages = function(lowest_id) {
+    return db.query(
+        `SELECT *
+        FROM images
+        WHERE id < $1
+        ORDER BY id DESC
+        LIMIT 2`,
+        [lowest_id]
     );
 };
 

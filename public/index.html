@@ -36,10 +36,14 @@
 
         <div id="img-container" v-if="images.length > 0">
 
-            <div v-for="imageInfo in images" @click="showModal(imageInfo.id)" class="img-card">
+            <a v-for="imageInfo in images" :href="'#' + imageInfo.id" class="img-card">
                 <img v-bind:src="imageInfo.url">
                 <p>{{imageInfo.title}}</p>
-            </div>
+            </a>
+            <a @click="moreContent" id="more-card" class="img-card" v-if="images[images.length - 1].id > lowest_id">
+                <img id="more-img" src="more-white.png">
+                <p>View more</p>
+            </a>
         </div>
 
         <img-modal v-if="currentImage" :id="currentImage" @close="hideModal"></img-modal>
