@@ -15,7 +15,8 @@
                     name: ""
                 },
                 prevButton: null,
-                nextButton: null
+                nextButton: null,
+                upvotes: null
             };
         },
         props: ['id'],
@@ -38,6 +39,13 @@
                     self.comment.text = "";
                     self.comment.name = "";
                 });
+            },
+            addUpvote: function() {
+                var self = this;
+                axios.post('/upvote/' + self.id + '/add').then(function(results) {
+                    console.log("results: ", results);
+                    self.upvotes = results.data[0].count;
+                });
             }
         },
         mounted: function() {
@@ -57,6 +65,12 @@
                     for (let i = 0; i < results.data.length; i++) {
                         self.comments.unshift(results.data[i]);
                     }
+                }
+            });
+            axios.get('/image/' + self.id + '/upvotes').then(function(results) {
+                console.log("results: ", results);
+                if (results.data.length > 0) {
+                    self.upvotes = results.data[0].count;
                 }
             });
         },
@@ -79,6 +93,12 @@
                         for (let i = 0; i < results.data.length; i++) {
                             self.comments.unshift(results.data[i]);
                         }
+                    }
+                });
+                axios.get('/image/' + self.id + '/upvotes').then(function(results) {
+                    console.log("results: ", results);
+                    if (results.data.length > 0) {
+                        self.upvotes = results.data[0].count;
                     }
                 });
             }

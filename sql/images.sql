@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS upvotes;
 
 CREATE TABLE images(
     id SERIAL PRIMARY KEY,
@@ -16,4 +17,9 @@ CREATE TABLE comments(
     username VARCHAR(100) NOT NULL,
     comment VARCHAR(400) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE upvotes(
+    id SERIAL PRIMARY KEY,
+    img_id INTEGER NOT NULL
 );

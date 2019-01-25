@@ -67,6 +67,9 @@
                     <h6>uploaded by {{username}} on {{uploadTime}}</h6>
                 </div>
                 <div class="comments-section">
+                    <h4 class="plus" @click="addUpvote">+</h4>
+                    <p class="upvotes" v-if="upvotes">Upvotes: {{upvotes}}</p>
+                    <br>
                     <h4>Add a comment:</h4>
                     <br>
                     <input placeholder="name" name="name" v-model="comment.name">

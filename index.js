@@ -7,9 +7,11 @@ const path = require('path');
 const s3 = require('./s3');
 const config = require('./config');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 app.use(require('body-parser').urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //takes the uploaded file
 //gives it a unique name of 24 characters (uidSafe)+ the original file extension (path)
@@ -39,6 +41,7 @@ app.use(express.static('./public'));
 
 app.get('/images', (req, res) => {
     db.getImages().then(dbInfo => {
+        res.cookie('upvotes', '');
         res.json(dbInfo.rows);
     });
 });
@@ -81,10 +84,41 @@ app.get('/image/:id/comments', (req, res) => {
     });
 });
 
+app.get('/image/:id/upvotes', (req, res) => {
+    db.getImageUpvotes(req.params.id).then((dbInfo) => {
+        console.log("dbInfo after getting upvotes: ", dbInfo);
+        res.json(dbInfo.rows);
+    }).catch(() => {
+        res.sendStatus(500);
+    });
+});
+
 app.post('/comment/:id/add', (req, res) => {
     db.addComment(req.body.name, req.body.text, req.params.id).then((dbInfo) => {
         res.json(dbInfo.rows);
     });
+});
+
+app.post('/upvote/:id/add', (req, res) => {
+    // check if img id is in cookie
+    const upvotes = req.cookies.upvotes.split(','); //converts string to array
+    if (upvotes.indexOf(req.params.id) == -1) {
+        db.addUpvote(req.params.id).then(() => {
+            //add img id to the cookie
+            upvotes.push(req.params.id);
+            res.cookie('upvotes', upvotes+'');
+            return db.getImageUpvotes(req.params.id);
+        }).then(dbInfo => {
+            console.log("dbInfo after getting upvotes after adding: ", dbInfo);
+            res.json(dbInfo.rows);
+        });
+    } else {
+        console.log('the db.addUpvote did not run');
+        db.getImageUpvotes(req.params.id).then(dbInfo => {
+            console.log("dbInfo after getting upvotes after adding: ", dbInfo);
+            res.json(dbInfo.rows);
+        });
+    }
 });
 
 app.get('*', (req, res) => {

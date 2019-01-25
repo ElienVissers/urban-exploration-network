@@ -222,6 +222,22 @@ a {
     text-align: justify;
 }
 
+.plus {
+    position: relative;
+    top: -10px;
+    cursor: pointer;
+}
+
+.upvotes {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    display: inline;
+    position: relative;
+    top: -10px;
+    font-weight: bold;
+}
+
 .comments-section {
     margin-top: 50px;
     margin-left: 20px;

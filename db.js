@@ -71,11 +71,28 @@ module.exports.getImageComments = function(img_id) {
     );
 };
 
+module.exports.getImageUpvotes = function(img_id) {
+    return db.query(
+        `SELECT count(*)
+        FROM upvotes
+        WHERE img_id = $1`,
+        [img_id]
+    );
+};
+
 module.exports.addComment = function(name, text, img_id) {
     return db.query(
         `INSERT INTO comments (username, comment, img_id)
         VALUES ($1, $2, $3)
         RETURNING *`,
         [name, text, img_id]
+    );
+};
+
+module.exports.addUpvote = function(img_id) {
+    return db.query(
+        `INSERT INTO upvotes (img_id)
+        VALUES ($1)`,
+        [img_id]
     );
 };
