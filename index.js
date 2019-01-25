@@ -74,13 +74,11 @@ app.get('/image/:id/data', (req, res) => {
 });
 
 app.get('/image/:id/comments', (req, res) => {
-    if (req.params.id) {
-        db.getImageComments(req.params.id).then((dbInfo) => {
-            res.json(dbInfo.rows);
-        }).catch(() => {
-            res.sendStatus(500);
-        });
-    }
+    db.getImageComments(req.params.id).then((dbInfo) => {
+        res.json(dbInfo.rows);
+    }).catch(() => {
+        res.sendStatus(500);
+    });
 });
 
 app.post('/comment/:id/add', (req, res) => {

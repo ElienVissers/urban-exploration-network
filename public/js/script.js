@@ -13,7 +13,9 @@
                 comment: {
                     text: "",
                     name: ""
-                }
+                },
+                prevButton: null,
+                nextButton: null
             };
         },
         props: ['id'],
@@ -46,6 +48,8 @@
                 self.description = results.data[0].description;
                 self.username = results.data[0].username;
                 self.uploadTime = results.data[0].created_at.slice(0, 10);
+                self.prevButton = results.data[0].prev_id;
+                self.nextButton = results.data[0].next_id;
             });
             axios.get('/image/' + self.id + '/comments').then(function(results) {
                 if (results.data.length > 0) {
@@ -65,18 +69,15 @@
                     self.description = results.data[0].description;
                     self.username = results.data[0].username;
                     self.uploadTime = results.data[0].created_at.slice(0, 10);
-                }).catch(function() {
-                    self.$emit('close');
+                    self.prevButton = results.data[0].prev_id;
+                    self.nextButton = results.data[0].next_id;
                 });
                 axios.get('/image/' + self.id + '/comments').then(function(results) {
-                    self.comments = [];
                     if (results.data.length > 0) {
                         for (let i = 0; i < results.data.length; i++) {
                             self.comments.unshift(results.data[i]);
                         }
                     }
-                }).catch(function() {
-                    self.$emit('close');
                 });
             }
         }

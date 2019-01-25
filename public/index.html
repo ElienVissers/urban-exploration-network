@@ -59,7 +59,9 @@
         <div id="img-modal"  @click="sendCloseEvent">
             <div class="modal-content">
                 <div class="img-section">
+                    <a :href="'#' + prevButton"><img class="prevButton" v-if="prevButton" src="/prev.png"></a>
                     <img :src="url">
+                    <a :href="'#' + nextButton"><img class="nextButton" v-if="nextButton" src="/next.png"></a>
                     <h3>{{title}}</h3>
                     <p>{{description}}</p>
                     <h6>uploaded by {{username}} on {{uploadTime}}</h6>

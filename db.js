@@ -48,9 +48,16 @@ module.exports.addImage = function(url, name, title, description) {
 
 module.exports.getImageData = function(img_id) {
     return db.query(
-        `SELECT *
-        FROM images
-        WHERE id = $1`,
+        `SELECT *, (
+            SELECT id FROM images WHERE id > $1
+            LIMIT 1
+            ) AS next_id,
+            (SELECT id FROM IMAGES
+            WHERE id < $1
+            ORDER BY id DESC
+            LIMIT 1
+            ) AS prev_id
+        FROM images WHERE id = $1`,
         [img_id]
     );
 };

@@ -187,6 +187,24 @@ a {
     align-items: center;
 }
 
+.img-section .prevButton, .img-section .nextButton {
+    position: absolute;
+    border-style: none;
+    height: 50px;
+    z-index: 5;
+    padding: 0;
+    top: 25%;
+    cursor: pointer;
+}
+
+.img-section .nextButton {
+    left: 25%;
+}
+
+.img-section .prevButton {
+    right: 25%;
+}
+
 .img-section img {
     position: fixed;
     top: 70px;
