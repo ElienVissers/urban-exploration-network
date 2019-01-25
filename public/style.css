@@ -269,5 +269,13 @@ a {
 }
 
 footer {
+    margin-top: 30px;
+}
+
+footer h6 {
     font-size: 1.3rem;
+    display: inline;
+    color: white;
+    background-color: black;
+    padding: 5px;
 }
