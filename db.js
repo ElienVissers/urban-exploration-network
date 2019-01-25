@@ -13,7 +13,7 @@ module.exports.getImages = function() {
         `SELECT *
         FROM images
         ORDER BY id DESC
-        LIMIT 4`
+        LIMIT 8`
     );
 };
 
@@ -32,7 +32,7 @@ module.exports.getMoreImages = function(lowest_id) {
         FROM images
         WHERE id < $1
         ORDER BY id DESC
-        LIMIT 2`,
+        LIMIT 8`,
         [lowest_id]
     );
 };

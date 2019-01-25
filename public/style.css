@@ -96,6 +96,8 @@ form button:active {
 }
 
 #img-container {
+    width: 95%;
+    margin: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -112,8 +114,12 @@ a {
     position: relative;
     overflow: hidden;
     margin: 20px;
-    flex-grow: 1;
+    flex-grow: 4;
     text-align: center;
+}
+
+#more-card {
+    flex-grow: 1;
 }
 
 .img-card:hover {
@@ -242,4 +248,8 @@ a {
 
 .comment-card p {
     margin-left: 5px;
+}
+
+footer {
+    font-size: 1.3rem;
 }

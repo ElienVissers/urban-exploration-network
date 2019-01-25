@@ -123,6 +123,12 @@
                 axios.post('/upload', formData).then(function(response) {
                     console.log("response: ", response);
                     console.log("self: ", self);
+                    self.form = {
+                        title: '',
+                        name: '',
+                        description: '',
+                        file: null
+                    };
                     self.images.unshift(response.data);
                 });
             },
