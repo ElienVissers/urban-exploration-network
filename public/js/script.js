@@ -42,6 +42,7 @@
         },
         mounted: function() {
             var self = this;
+            self.comments = [];
             axios.get('/image/' + self.id + '/data').then(function(results) {
                 self.url = results.data[0].url;
                 self.title = results.data[0].title;
@@ -63,6 +64,7 @@
             //the function id will run everytime the id (= a prop) changes (the watcher will listen for a prop or data change)
             id: function() {
                 var self = this;
+                self.comments = [];
                 axios.get('/image/' + self.id + '/data').then(function(results) {
                     self.url = results.data[0].url;
                     self.title = results.data[0].title;
