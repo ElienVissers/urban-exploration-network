@@ -37,7 +37,7 @@
         <div id="img-container" v-if="images.length > 0">
 
             <a v-for="imageInfo in images" :href="'#' + imageInfo.id" class="img-card">
-                <img v-bind:src="imageInfo.url">
+                <img v-bind:key="imageInfo.id" v-bind:src="imageInfo.url">
                 <p>{{imageInfo.title}}</p>
             </a>
             <a @click="moreContent" id="more-card" class="img-card" v-if="images[images.length - 1].id > lowest_id">
