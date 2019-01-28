@@ -86,7 +86,6 @@ app.get('/image/:id/comments', (req, res) => {
 
 app.get('/image/:id/upvotes', (req, res) => {
     db.getImageUpvotes(req.params.id).then((dbInfo) => {
-        console.log("dbInfo after getting upvotes: ", dbInfo);
         res.json(dbInfo.rows);
     }).catch(() => {
         res.sendStatus(500);
@@ -109,13 +108,10 @@ app.post('/upvote/:id/add', (req, res) => {
             res.cookie('upvotes', upvotes+'');
             return db.getImageUpvotes(req.params.id);
         }).then(dbInfo => {
-            console.log("dbInfo after getting upvotes after adding: ", dbInfo);
             res.json(dbInfo.rows);
         });
     } else {
-        console.log('the db.addUpvote did not run');
         db.getImageUpvotes(req.params.id).then(dbInfo => {
-            console.log("dbInfo after getting upvotes after adding: ", dbInfo);
             res.json(dbInfo.rows);
         });
     }

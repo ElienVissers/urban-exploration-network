@@ -43,7 +43,6 @@
             addUpvote: function() {
                 var self = this;
                 axios.post('/upvote/' + self.id + '/add').then(function(results) {
-                    console.log("results: ", results);
                     self.upvotes = results.data[0].count;
                 });
             }
@@ -68,7 +67,6 @@
                 }
             });
             axios.get('/image/' + self.id + '/upvotes').then(function(results) {
-                console.log("results: ", results);
                 if (results.data.length > 0) {
                     self.upvotes = results.data[0].count;
                 }
@@ -96,7 +94,6 @@
                     }
                 });
                 axios.get('/image/' + self.id + '/upvotes').then(function(results) {
-                    console.log("results: ", results);
                     if (results.data.length > 0) {
                         self.upvotes = results.data[0].count;
                     }
@@ -144,8 +141,6 @@
                 formData.append('name', this.form.name);
 
                 axios.post('/upload', formData).then(function(response) {
-                    console.log("response: ", response);
-                    console.log("self: ", self);
                     self.form = {
                         title: '',
                         name: '',
